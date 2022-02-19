@@ -1,3 +1,11 @@
+<div style="display: flex; justify-content: center;">
+  <label style="margin-right: 5px;">Filter by category:</label>
+  <select name="category" (change)="onSelect($event)">
+    <option value="default">----</option>
+    <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+  </select>
+</div>
+
 <div class="map-container">
     <div class="map-frame">
       <div id="map"></div>

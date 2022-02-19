@@ -10,7 +10,20 @@ import * as L from 'leaflet'
 export class MapComponent implements OnInit, AfterViewInit {
   private map!: L.Map;
 
+  categories = [
+    "shopping mall",
+    "hypermarket",
+    "basilica"
+  ];
+
+  selected: string = '';
+
   constructor() { }
+
+  onSelect = (e: any) => {
+    this.selected = e.target.value;
+    console.log(this.selected)
+  }
 
   private initMap(): void {
     this.map = L.map('map', {
