@@ -3,6 +3,21 @@ import * as L from 'leaflet';
 
 import { MarkerService } from '../services/marker.service'
 
+const iconRetinaUrl = 'assets/marker-icon-2x.png';
+const iconUrl = 'assets/marker-icon.png';
+const shadowUrl = 'assets/marker-shadow.png';
+const iconDefault = L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41]
+});
+L.Marker.prototype.options.icon = iconDefault;
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -31,7 +46,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [43.604652, 1.444209], // Toulouse
+      center: [43.633614292820766, 1.4370440975651275], // Toulouse , 
       zoom: 13
     })
 
@@ -46,10 +61,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // Angular lifecycle
   ngOnInit(): void {
-    this.markers.getMarkers()
   }
 
   ngAfterViewInit(): void {
     this.initMap()
+    this.markers.getMarkers(this.map)
   }
 }
