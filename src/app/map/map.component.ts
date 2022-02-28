@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import * as L from 'leaflet'
+import * as L from 'leaflet';
+
+import { MarkerService } from '../services/marker.service'
 
 @Component({
   selector: 'app-map',
@@ -18,7 +20,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   selected: string = '';
 
-  constructor() { }
+  constructor(
+    private markers: MarkerService
+  ) {}
 
   onSelect = (e: any) => {
     this.selected = e.target.value;
@@ -42,7 +46,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // Angular lifecycle
   ngOnInit(): void {
-
+    this.markers.getMarkers()
   }
 
   ngAfterViewInit(): void {
