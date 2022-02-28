@@ -1,0 +1,145 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.3605704994725742,
+            43.661935944226684
+          ]
+        },
+        "properties": {
+          "name": "Musee Aeroscopia",
+          "category": "museum"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.371213504464113,
+            43.64852254222897
+          ]
+        },
+        "properties": {
+          "name": "Centre commercial Blagnac",
+          "category": "shopping mall"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.367347243159984,
+            43.63148594789174
+          ]
+        },
+        "properties": {
+          "name": "Aeroport Toulouse-Blagnac",
+          "category": "international airport"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.4020228405698925,
+            43.6117273861733
+          ]
+        },
+        "properties": {
+          "name": "Hopital des Enfants",
+          "category": "children hospital"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.4094042796135873,
+            43.60091334910662
+          ]
+        },
+        "properties": {
+          "name": "Zenith Toulouse Metropole",
+          "category": "live music venue"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.429316998630014,
+            43.602653670226445
+          ]
+        },
+        "properties": {
+          "name": "Les Abbatoirs",
+          "category": "art museum"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.441333294588203,
+            43.61036020145001
+          ]
+        },
+        "properties": {
+          "name": "Basilique Saint-Sernin de Toulouse",
+          "category": "basilica"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.4351534852382772,
+            43.63894032125874
+          ]
+        },
+        "properties": {
+          "name": "Intermarche Super Toulouse et drive",
+          "category": "hypermarket"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.4682841297474933,
+            43.649871729748966
+          ]
+        },
+        "properties": {
+          "name": "Castorama",
+          "category": "Do-it yourself shop"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.4845919600499258,
+            43.63397084151468
+          ]
+        },
+        "properties": {
+          "name": "Centre Commercial Gramont",
+          "category": "shopping mall"
+        }
+      }
+    ]
+}
