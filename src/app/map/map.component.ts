@@ -57,6 +57,12 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   
     tiles.addTo(this.map);
+
+    this.map.on('click', (e:L.LeafletMouseEvent) => {
+      console.log(e.latlng);
+      const marker = L.marker([e.latlng.lat, e.latlng.lng])
+      marker.addTo(this.map);
+    })
   }
 
   // Angular lifecycle
