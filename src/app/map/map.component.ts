@@ -36,7 +36,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   selected: string = '';
 
   constructor(
-    private markers: MarkerService
+    private markerService: MarkerService
   ) {}
 
   onSelect = (e: any) => {
@@ -65,6 +65,6 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap()
-    this.markers.getMarkers(this.map)
+    this.markerService.getMarkers(this.map)
   }
 }
