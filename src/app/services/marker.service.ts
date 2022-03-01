@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 
 import * as L from 'leaflet';
 
+import { PopupService } from './popup.service'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
@@ -11,7 +12,8 @@ import { environment } from 'src/environments/environment'
 
 export class MarkerService {
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private popupService: PopupService
   ) {}
 
   public getMarkers = (map: L.Map) => {
@@ -34,6 +36,7 @@ export class MarkerService {
       const lat = feature.geometry.coordinates[1]
       const marker = L.marker([lat, long])
       marker.addTo(map);
+      marker.bindPopup(this.popupService.makePoiPopup(feature))
     }
   }
 }
