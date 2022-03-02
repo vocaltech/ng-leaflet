@@ -43,7 +43,14 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   onSelect = (e: any) => {
     this.selected = e.target.value;
-    console.log(this.selected)
+
+    // remove all markers from the map
+    this.markerService.clearMarkers()
+
+    // show the filtered markers
+    const filter = this.selected;
+    console.log(`filter: ${filter}`)
+    this.markerService.getMarkers(this.map, filter)
   }
 
   private initMap(): void {
@@ -83,11 +90,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   // Angular lifecycle
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
+    console.log('[ngAfterViewInit()]')
     this.initMap()
-    this.markerService.getMarkers(this.map)
+
+    const filter = '';
+    this.markerService.getMarkers(this.map, filter)
   }
 }
