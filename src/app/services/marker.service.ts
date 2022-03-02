@@ -11,15 +11,23 @@ import { environment } from 'src/environments/environment'
 })
 
 export class MarkerService {
+  private markerGroup: L.LayerGroup;
+
   constructor(
     private http: HttpClient,
     private popupService: PopupService
-  ) {}
+  ) {
+    this.markerGroup = L.layerGroup()
+  }
 
-  public getMarkers = (map: L.Map) => {
+  public clearMarkers = () => {
+    this.markerGroup.clearLayers();
+  }
+
+  public getMarkers = (map: L.Map, filter: string) => {
     this.http.get(environment.url_markers).subscribe(
       (response: any) => {
-        this.addMarkersToMap(response, map);
+        this.addMarkersToMap(response, map, filter);
       }, 
       (error: any) => {
         console.log(error)
@@ -30,13 +38,25 @@ export class MarkerService {
     )
   }
 
-  private addMarkersToMap(res: any, map: L.Map) {
-    for (const feature of res.features) {
+  private addMarkersToMap(res: any, map: L.Map, filter: string) {
+    const filteredRes: Array<any> = res.features.filter((feature: any) => feature.properties.category === filter)
+
+    if (filteredRes.length === 0) { // show all markers
+      this.createMarkers(res.features)
+    } else { // show filteredRes
+     this.createMarkers(filteredRes)
+    }
+
+    this.markerGroup.addTo(map);
+  }
+
+  private createMarkers = (arr: Array<any>) => {
+    arr.map((feature: any) => {
       const long = feature.geometry.coordinates[0]
       const lat = feature.geometry.coordinates[1]
       const marker = L.marker([lat, long])
-      marker.addTo(map);
+      marker.addTo(this.markerGroup);
       marker.bindPopup(this.popupService.makePoiPopup(feature))
-    }
+    })
   }
 }
