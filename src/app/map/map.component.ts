@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 
 import { MarkerService } from '../services/marker.service'
+import { PopupService } from '../services/popup.service';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -36,7 +37,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   selected: string = '';
 
   constructor(
-    private markerService: MarkerService
+    private markerService: MarkerService,
+    private popupService: PopupService
   ) {}
 
   onSelect = (e: any) => {
@@ -62,6 +64,21 @@ export class MapComponent implements OnInit, AfterViewInit {
       console.log(e.latlng);
       const marker = L.marker([e.latlng.lat, e.latlng.lng])
       marker.addTo(this.map);
+
+      const feature = {
+        "geometry": {
+          "coordinates": [
+            e.latlng.lng,
+            e.latlng.lat
+          ]
+        },
+        "properties": {
+          "name": "",
+          "category": ""
+        }
+      }
+
+      marker.bindPopup(this.popupService.makePoiPopup(feature));
     })
   }
 
