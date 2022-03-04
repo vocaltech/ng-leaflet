@@ -42,21 +42,29 @@ export class MarkerService {
     const filteredRes: Array<any> = res.features.filter((feature: any) => feature.properties.category === filter)
 
     if (filteredRes.length === 0) { // show all markers
-      this.createMarkers(res.features)
+      this.createMarkers(res.features, map)
     } else { // show filteredRes
-     this.createMarkers(filteredRes)
+     this.createMarkers(filteredRes, map)
     }
 
     this.markerGroup.addTo(map);
   }
 
-  private createMarkers = (arr: Array<any>) => {
+  private createMarkers = (arr: Array<any>, map: L.Map) => {
     arr.map((feature: any) => {
       const long = feature.geometry.coordinates[0]
       const lat = feature.geometry.coordinates[1]
       const marker = L.marker([lat, long])
-      marker.addTo(this.markerGroup);
+
+      // context menu
+      marker.on('contextmenu', event => {
+        console.log(event)
+      })
+
+      // popup
       marker.bindPopup(this.popupService.makePoiPopup(feature))
+
+      marker.addTo(this.markerGroup);
     })
   }
 }
