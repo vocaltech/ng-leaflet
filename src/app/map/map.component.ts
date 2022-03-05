@@ -101,7 +101,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     // test HERE API
     const { polyline } = this.hereService.decode("BG-wvhzCqk96ChD5J3DjN8BjS0K36BwC7anG_2BvCnLvCnakDv-BsE7fsEnVkIjS8V_YkD4DsEoBgKoBkIrEoL3IoGvMU3N7BnGvCzF7G_E7GvCUzKArJAzKT_YTzF3DzU_E_T7B7GnGjSnB3DjDzK_J3cvHvRvC3DvCvC3NzZjNkIjI0FnGsErEkDrEkDvHoG7GoG7GoG_OgPrOgPjIkIzF0F_EgFnQ8Q3DsE_EoGnB8BTwCjDsEvCsEjDsEjDgFvCwC7BwC7BkDnB4DT4DAsEnL8GvR0KrEwC_OsJrT8LjN0K3NwMzewgBnGoGrTgU3NsO3S4SjSgPnLwHnLwHvHgFzFsEnLkIr7BopBrYkS3mBofjDT3DUvC8BjD4D7B4DAoGUsEoBkD8BkD8BUwCU4DA4D7B8GgK0FkIsE0FoG0FsEgFoL8L8G8LwHsOkDkI0FgK8GkNgKsY8GoQgFwRkDoL4DwRsEkXsE4XwHsnB8LoiC4I0yB7BoB7BsETgFzKAnG7BvHrE7V_Y7f_nBU7BUvCTvCT7BUrEUjIT7LvC_J3DrJzFrJ_J7G_YvRjIrEnV7L_O7G3DvCjDzFnB3IgZ_5C_OrJrEvCjITtGwD")
-    console.log(`[hereService.decode()]: ${polyline}`)
+    this.markerService.addMarkersToMapFromHereDecoder(polyline)
 
     // init map and markers
     this.initMap()
