@@ -37,6 +37,19 @@ export class MarkerService {
     )
   }
 
+  /*
+   * HERE decoded format:
+   * 
+   *  43.540239,1.489477,43.54019,1.48932,43.540130000000005,1.48911...
+   * 
+   */
+  public addMarkersToMapFromHereDecoder(hereDecoded: number[][]) {
+    hereDecoded.map((latLng: number[]) => {
+      const [lat, lng] = latLng;
+      L.marker([lat, lng]).addTo(this.markerGroup)
+    })
+  }
+
   private addGeoJsonMarkersToMap(res: any, map: L.Map, filter: string) {
     const filteredRes: Array<any> = res.features.filter((feature: any) => feature.properties.category === filter)
 
