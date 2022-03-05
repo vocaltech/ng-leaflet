@@ -66,5 +66,15 @@ export class MarkerService {
 
       marker.addTo(this.markerGroup);
     })
+
+    // polyline test
+    const latlngs: L.LatLngExpression[] = [
+      [43.64852254222897, 1.371213504464113],
+      [43.63397084151468, 1.4845919600499258]
+    ]
+
+    const polyline = L.polyline(latlngs, { color: 'red' })
+    polyline.addTo(map)
+
   }
 }
