@@ -1,6 +1,6 @@
 .map-container {
     position: absolute;
-    top: 20px;
+    top: 50px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -14,4 +14,45 @@ height: 100%;
 
 #map {
 height: 100%;
+}
+
+.header {
+  display: flex; 
+  justify-content: space-between;
+}
+
+.route_summary {
+  color: black;
+  border-left: 5px solid blue;
+  margin-left: 22px;
+}
+
+.route_detail {
+  margin-left: 8px;
+}
+
+.route_detail > span {
+  color: blue;
+  font-weight: bold;
+}
+
+.dist_duration {
+  display: flex;
+  justify-content: flex-start;
+  column-gap: 10px;
+  color: gray;
+  font-size: smaller;
+  margin-left: 8px;
+  margin-top: 5px;
+}
+
+.filter_category {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin-right: 23px;
+}
+
+.filter_category > label {
+  margin-right: 5px;
 }
