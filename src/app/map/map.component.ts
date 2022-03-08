@@ -1,4 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+
+import secondsToMinutes from 'date-fns/secondsToMinutes';
+import minutesToHours from 'date-fns/minutesToHours';
+
 import * as L from 'leaflet';
 
 import { MarkerService } from '../services/marker.service'
@@ -37,7 +41,22 @@ export class MapComponent implements OnInit, AfterViewInit {
     "basilica"
   ];
 
-  selected: string = '';
+  route_summary =  {
+    duration: secondsToMinutes(1102),
+    length: 5656 / 1000,
+    baseDuration: 768,
+    mode: "car",
+    departure: {
+      name: "Basilique St Sernin",
+      time: "2022-03-05T17:53:51+01:00"
+    },
+    arrival: {
+      name: "Centre Commercial Gramont",
+      time: "2022-03-05T18:12:13+01:00"
+    }
+  }
+
+  private selected: string = '';
 
   constructor(
     private markerService: MarkerService,
@@ -63,10 +82,13 @@ export class MapComponent implements OnInit, AfterViewInit {
       zoom: 13
     })
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
       maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1
     });
   
     tiles.addTo(this.map);
@@ -99,14 +121,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     console.log('[ngAfterViewInit()]')
 
-    // test HERE API
-    const { polyline } = this.hereService.decode("BG-wvhzCqk96ChD5J3DjN8BjS0K36BwC7anG_2BvCnLvCnakDv-BsE7fsEnVkIjS8V_YkD4DsEoBgKoBkIrEoL3IoGvMU3N7BnGvCzF7G_E7GvCUzKArJAzKT_YTzF3DzU_E_T7B7GnGjSnB3DjDzK_J3cvHvRvC3DvCvC3NzZjNkIjI0FnGsErEkDrEkDvHoG7GoG7GoG_OgPrOgPjIkIzF0F_EgFnQ8Q3DsE_EoGnB8BTwCjDsEvCsEjDsEjDgFvCwC7BwC7BkDnB4DT4DAsEnL8GvR0KrEwC_OsJrT8LjN0K3NwMzewgBnGoGrTgU3NsO3S4SjSgPnLwHnLwHvHgFzFsEnLkIr7BopBrYkS3mBofjDT3DUvC8BjD4D7B4DAoGUsEoBkD8BkD8BUwCU4DA4D7B8GgK0FkIsE0FoG0FsEgFoL8L8G8LwHsOkDkI0FgK8GkNgKsY8GoQgFwRkDoL4DwRsEkXsE4XwHsnB8LoiC4I0yB7BoB7BsETgFzKAnG7BvHrE7V_Y7f_nBU7BUvCTvCT7BUrEUjIT7LvC_J3DrJzFrJ_J7G_YvRjIrEnV7L_O7G3DvCjDzFnB3IgZ_5C_OrJrEvCjITtGwD")
-    this.markerService.addMarkersToMapFromHereDecoder(polyline)
-
     // init map and markers
     this.initMap()
 
     const filter = '';
     this.markerService.getGeoJsonMarkers(env.url_markers, this.map, filter)
+
+    // test HERE API
+    const { polyline } = this.hereService.decode("BGow4lzC47-3CzHrBrJ7B4D3mBAjDT3DwCjDoB7BkrBsJgPsE0FU3DkSzF8a7GkhB_EsY3D0PvC0K7B8GjD0KjDsJjDkIjD8GwC0KgjBopBoGwHsJoL0oBouB4I0KwCsTsJg8BoGopBwH0tB4D0ZwC0U8GsJoGsJsEwHsEkIwMkXwH4N8G8LgK8Q0FsJwHkI4DsEwCwCoBoBoG0KkN0PgFoGkSgU8GkIwRsTkI4I0KoLgK0K8GwHwCkD8B8BwCkD8BwCwCwC8B8BwCkD8B8B8B8B4I0KsOoQoLkNwH4IoLkN8GwHoLwMwHkIgP8Q0PwR4DsEsToVoLwMkDkD8BwCsO8QoLkNoGkIgKoL4IsJwMsOoGgF8GgF4IgFoakNgFwC8G4D4rB8VgUsJ7GwR_E4NvCsJTgFAoGUoGoB0FwCgF0FkI8LkNgyB84B4S0ZoL0PgFwHwCsE8BsEoBsEoB0FoBsJUwHAkIT4InBwMTgF7BsJ7B8GnBsEvCwHrEgKnLkcrJgZ3Iwb7B4I3DkS7L8nCT4DjI4mBjD8LjD0K_EsO3DgKvCoGjD8G_E4IjIwMzK4N_Y0e3DgF7GsJvH0KvH8L4IkIgKsJsE4D8GoG0F8GoG0K8L0Z8G8QsJgUgFgKgFsJgKkS0FgKsE8GkD4DwCwCA4DwC0FgF8BkDwHwCgF0FwHwCwCgF0F0F0FkIgKoGkIkDsEgFoG0KgP0FkIwM8QkIoL4SwWoL8LgF0F8G8GkSgPoGgFgF4D4DwC8QoLsOwM4S0U8LkNkIkIoG0FwHwH8LoLwH8G8G4IsJwMgKkcsEwRnBsEAsEA0FoB4DwC4DwCwCUkNkDsOkD8G8BgFoBwC8GwMgFgKoGwM0FgKwH4N0FgKoGoL4DoG4D0F0KoQoG4IgF8G4SkX4IgKgFoG4DgF4D0F4DoGwCgFwC0FkDkI4DsJwCwHkDgK8BoGoB0FUsEU4InBsETsEAsEUsEUwCoBkD8BkDwCwCwC8BwCUwCAkDTwCnBkDvC8BvCoB7BoBvCUvCU3DArEoGrE8GjDsOnB8GT0jB3D4DTgU3DgFT0FnBkhBzFsJ7BoG4DU0F4D0FgF8BkDTwCnBkDjDkDsJ4DwRgF8VsEoVgFwboB0F4xDrdT4D7GgU3DsJ7B0FTkDA4D7YiL")
+    this.markerService.addMarkersToMapFromHereDecoder(polyline, this.map, false)
   }
 }
