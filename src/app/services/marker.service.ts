@@ -43,11 +43,16 @@ export class MarkerService {
    *  43.540239,1.489477,43.54019,1.48932,43.540130000000005,1.48911...
    * 
    */
-  public addMarkersToMapFromHereDecoder(hereDecoded: number[][]) {
-    hereDecoded.map((latLng: number[]) => {
-      const [lat, lng] = latLng;
-      L.marker([lat, lng]).addTo(this.markerGroup)
-    })
+  public addMarkersToMapFromHereDecoder(hereDecoded: number[][], map: L.Map, isMarkerVisible: boolean) {
+    if (isMarkerVisible) {
+      hereDecoded.map((latLng: number[]) => {
+        const [lat, lng] = latLng;
+        L.marker([lat, lng]).addTo(this.markerGroup)
+      })
+    }
+
+    const polyline = L.polyline(hereDecoded as L.LatLngExpression[], { color: 'blue', weight: 7, opacity: 0.70 })
+    polyline.addTo(map)
   }
 
   private addGeoJsonMarkersToMap(res: any, map: L.Map, filter: string) {
@@ -78,15 +83,5 @@ export class MarkerService {
 
       marker.addTo(this.markerGroup);
     })
-
-    // polyline test
-    const latlngs: L.LatLngExpression[] = [
-      [43.64852254222897, 1.371213504464113],
-      [43.63397084151468, 1.4845919600499258]
-    ]
-
-    const polyline = L.polyline(latlngs, { color: 'red' })
-    polyline.addTo(map)
-
   }
 }
