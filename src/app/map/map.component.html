@@ -1,9 +1,23 @@
-<div style="display: flex; justify-content: center;">
-  <label style="margin-right: 5px;">Filter by category:</label>
-  <select name="category" (change)="onSelect($event)">
-    <option value="default">----</option>
-    <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-  </select>
+<div class="header">
+  <div class="route_summary">
+    <div class="route_detail">
+      Itineraire:&nbsp;<span>{{route_summary.departure.name}}</span>&nbsp;({{route_summary.departure.time}})
+      <br />
+      vers&nbsp;<span>{{route_summary.arrival.name}}</span>&nbsp;({{route_summary.arrival.time}})
+    </div>
+    <div class="dist_duration">
+      <div>distance:{{route_summary.length}} kms</div>
+      <div>duree:{{route_summary.duration}} mns</div>
+    </div>
+  </div>
+
+  <div class="filter_category">
+    <label>Filter by category:</label>
+    <select name="category" (change)="onSelect($event)">
+      <option value="default">----</option>
+      <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+    </select>
+  </div>
 </div>
 
 <div class="map-container">
