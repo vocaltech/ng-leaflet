@@ -6,6 +6,9 @@ import { Resolve } from '@angular/router';
   providedIn: 'root'
 })
 
+//
+// TODO: @fav > ng > resolver
+//
 export class DataService implements Resolve<any> {
   constructor(
     private http: HttpClient
