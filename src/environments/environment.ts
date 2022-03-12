@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url_markers: '/assets/data/toulouse_poi.geojson'
+  url_markers: '/assets/data/toulouse_poi.geojson',
+  url_api_address_fr: 'https://api-adresse.data.gouv.fr/search/'
 };
 
 /*
