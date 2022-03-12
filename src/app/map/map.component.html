@@ -1,22 +1,56 @@
 <div class="header">
-  <div class="route_summary">
-    <div class="route_detail">
-      Itineraire:&nbsp;<span>{{route_summary.departure.name}}</span>&nbsp;({{route_summary.departure.time}})
-      <br />
-      vers&nbsp;<span>{{route_summary.arrival.name}}</span>&nbsp;({{route_summary.arrival.time}})
-    </div>
-    <div class="dist_duration">
-      <div>distance:{{route_summary.length}} kms</div>
-      <div>duree:{{route_summary.duration}} mns</div>
-    </div>
-  </div>
-
   <div class="filter_category">
     <label>Filter by category:</label>
     <select name="category" (change)="onSelect($event)">
       <option value="default">----</option>
       <option *ngFor="let category of categories" [value]="category">{{category}}</option>
     </select>
+  </div>
+</div>
+
+<div>
+  <form class="map-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Depart</mat-label>
+      <input
+        type="text"
+        matInput 
+        placeholder="Ex.: Toulouse" 
+        [formControl]="departureControl"
+        [matAutocomplete]="auto"
+        #departure
+        (keyup.enter)="onChangeDeparture(departure.value)"
+        (blur)="onChangeDeparture(departure.value)">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngIf="isLoading">Loading...</mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let option of filteredOptions$" [value]="option">
+            {{option}}
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Arrivee</mat-label>
+      <input matInput placeholder="Ex.: Albi" value="Albi">
+    </mat-form-field>
+  </form>
+
+  <div class="route_summary">
+    <div class="route_detail">
+      De:&nbsp;<span>{{route_summary.departure.name}}</span>
+      <br />
+      ({{route_summary.departure.time}})
+      <br /><br />
+      vers&nbsp;<span>{{route_summary.arrival.name}}</span>
+      <br />
+      ({{route_summary.arrival.time}})
+    </div>
+    <div class="dist_duration">
+      <div>distance:{{route_summary.length}} kms</div>
+      <div>duree:{{route_summary.duration}} mns</div>
+    </div>
   </div>
 </div>
 
