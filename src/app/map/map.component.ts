@@ -1,4 +1,10 @@
+import { HttpClient } from '@angular/common/http'
+
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl } from '@angular/forms'
+
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, switchMap, tap } from 'rxjs/operators'
 
 import secondsToMinutes from 'date-fns/secondsToMinutes';
 import minutesToHours from 'date-fns/minutesToHours';
@@ -58,11 +64,24 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   private selected: string = '';
 
+  // form controls
+  departureControl = new FormControl()
+  options = ['Toulouse', 'Carcassonne', 'Narbonne', 'Balma', 'Labege']
+  //filteredOptions$!: Observable<string[]>
+  filteredOptions$!: any[]
+  isLoading = false
+  errorMsg!: string
+
   constructor(
+    private http: HttpClient,
     private markerService: MarkerService,
     private popupService: PopupService,
     private hereService: HereService
   ) {}
+
+  onChangeDeparture = (e: any) => {
+    console.log(`[onChangeDeparture()] departure value: ${e}`)
+  }
 
   onSelect = (e: any) => {
     this.selected = e.target.value;
@@ -115,8 +134,33 @@ export class MapComponent implements OnInit, AfterViewInit {
     })
   }
 
+  private _filter = (value: string): string[] => {
+    const filteredVal = value.toLowerCase()
+    return this.options.filter(option => option.toLowerCase().includes(filteredVal))
+  }
+
   // Angular lifecycle
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.departureControl.valueChanges.pipe(
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.errorMsg = ''
+        this.filteredOptions$ = []
+        this.isLoading = true
+      }),
+      switchMap(value => this.http.get(env.url_api_address_fr + '?q=' + value)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          })
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      console.log(data)
+    })
+  }
 
   ngAfterViewInit(): void {
     console.log('[ngAfterViewInit()]')
