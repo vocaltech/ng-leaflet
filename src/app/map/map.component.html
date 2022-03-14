@@ -8,30 +8,32 @@
   </div>
 </div>
 
-<div>
+<div class="directions">
   <form class="map-form">
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field" appearance="fill">
       <mat-label>Depart</mat-label>
       <input
         type="text"
         matInput 
-        placeholder="Ex.: Toulouse" 
+        placeholder="Ex.: Rue d’Alsace Lorraine 31000 Toulouse" 
         [formControl]="departureControl"
         [matAutocomplete]="auto"
         #departure
         (keyup.enter)="onChangeDeparture(departure.value)"
         (blur)="onChangeDeparture(departure.value)">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngIf="isLoading">Loading...</mat-option>
+        <mat-option *ngIf="isLoading">
+          <span class="option">Loading...</span>
+        </mat-option>
         <ng-container *ngIf="!isLoading">
-          <mat-option *ngFor="let option of filteredOptions$" [value]="option">
-            {{option}}
+          <mat-option *ngFor="let option of filteredOptions$" [value]="option.properties.label">
+            <span class="option">{{option.properties.label}}</span>
           </mat-option>
         </ng-container>
       </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field class="form-field" appearance="fill">
       <mat-label>Arrivee</mat-label>
       <input matInput placeholder="Ex.: Albi" value="Albi">
     </mat-form-field>
