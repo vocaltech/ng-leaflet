@@ -3,11 +3,9 @@ import { HttpClient } from '@angular/common/http'
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms'
 
-import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize, switchMap, tap } from 'rxjs/operators'
 
 import secondsToMinutes from 'date-fns/secondsToMinutes';
-import minutesToHours from 'date-fns/minutesToHours';
 
 import * as L from 'leaflet';
 
@@ -66,8 +64,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // form controls
   departureControl = new FormControl()
-  options = ['Toulouse', 'Carcassonne', 'Narbonne', 'Balma', 'Labege']
-  //filteredOptions$!: Observable<string[]>
+
+  // TODO: arrivalControl
+  arrivalControl = new FormControl()
   filteredOptions$!: any[]
   isLoading = false
   errorMsg!: string
@@ -134,11 +133,6 @@ export class MapComponent implements OnInit, AfterViewInit {
     })
   }
 
-  private _filter = (value: string): string[] => {
-    const filteredVal = value.toLowerCase()
-    return this.options.filter(option => option.toLowerCase().includes(filteredVal))
-  }
-
   // Angular lifecycle
   ngOnInit(): void {
     this.departureControl.valueChanges.pipe(
@@ -158,7 +152,12 @@ export class MapComponent implements OnInit, AfterViewInit {
       )
     )
     .subscribe((data: any) => {
-      console.log(data)
+      if (data !== undefined) {
+        this.filteredOptions$ = data.features
+        console.log(data.features)
+      } else {
+        console.log('Http fetching Error!')
+      }
     })
   }
 
