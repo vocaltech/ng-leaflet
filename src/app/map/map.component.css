@@ -1,7 +1,7 @@
 .map-container {
     position: absolute;
     top: 50px;
-    left: 250px;
+    left: 350px;
     right: 0;
     bottom: 0;
 
@@ -9,7 +9,7 @@
     
 .map-frame {
 border: 2px solid black;
-width: 98%;
+width: 95%;
 height: 98%;
 }
 
@@ -58,6 +58,20 @@ height: 100%;
   margin-right: 5px;
 }
 
+.directions {
+  margin-left: 10px;
+}
+
 .map-form {
-  max-width: 200px;
+  min-width: 150px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.form-field {
+  width: 90%;
+}
+
+.option {
+  font-size: 14px;
 }
